@@ -20,12 +20,12 @@ const Directory = () => {
   }, []);
 
   useEffect(() => {
-    let isMounted = true; // Flag to track initial mount
+    let isMounted = true; 
 
-    // Initialize an empty object to store image URLs for each message's uid
+    
     const accumulatedUrls = {};
 
-    // Loop through all the messages and fetch image URLs
+    
     Promise.all(
       messages.map((message) => {
         const imagesListRef = ref(storage, `${message.uid}`);
@@ -33,7 +33,7 @@ const Directory = () => {
           return Promise.all(
             response.items.map((item) => getDownloadURL(item))
           ).then((urls) => {
-            accumulatedUrls[message.uid] = urls; // Store image URLs using uid as the key
+            accumulatedUrls[message.uid] = urls; 
           });
         });
       })
@@ -45,7 +45,7 @@ const Directory = () => {
 
     // Cleanup function
     return () => {
-      isMounted = false; // Set the flag to false when unmounting
+      isMounted = false; 
     };
   }, [messages]);
 
@@ -84,9 +84,6 @@ const Directory = () => {
                       <Card.Text>{message.name}</Card.Text>
                       <Card.Text>{message.email}</Card.Text>
                       <Card.Text>{message.phone}</Card.Text>
-                      <Card.Text>Vacancy: {message.vacancy}</Card.Text>
-
-                      <Card.Text>Capacity: {message.availability}</Card.Text>
 
                       
                       {imageUrlsMap[message.uid] &&

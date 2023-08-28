@@ -9,12 +9,10 @@ import Col from "react-bootstrap/Col";
 function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // const [name, setName] = useState("");
   const [user, loading, error] = useAuthState(auth);
   const navigate = useNavigate();
 
   const register = () => {
-    // if (!name) alert("Please enter name");
     registerWithEmailAndPassword(email, password);
   };
 

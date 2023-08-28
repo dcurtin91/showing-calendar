@@ -1,30 +1,18 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { auth, logInWithEmailAndPassword } from "./firebase";
+import { auth, logInWithEmailAndPassword, db } from "./firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { getDocs, collection, getFirestore } from "firebase/firestore";
-import { initializeApp } from "firebase/app";
+import { getDocs, collection } from "firebase/firestore";
 import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyC1IqrdEPTT1ZoeKikj2jm04xUteoGHxlk",
-  authDomain: "member-portal-8a367.firebaseapp.com",
-  projectId: "member-portal-8a367",
-  storageBucket: "member-portal-8a367.appspot.com",
-  messagingSenderId: "389153166875",
-  appId: "1:389153166875:web:a2cde7e4ae132942d74abe",
-  measurementId: "G-4ZCLBGQ773",
-};
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [user, loading, error] = useAuthState(auth);
+  const [user, loading] = useAuthState(auth);
   const navigate = useNavigate();
 
   useEffect(() => {

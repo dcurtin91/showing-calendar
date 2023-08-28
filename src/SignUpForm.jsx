@@ -47,7 +47,7 @@ function SignUpForm() {
       vacancy: false,
       availability: "",
     });
-    navigate("/member-portal/dashboard");
+    navigate("/showing-calendar/dashboard");
   };
 
   return (

@@ -26,12 +26,12 @@ const API_KEY = import.meta.env.VITE_SOME_KEY;
 
 const firebaseConfig = {
   apiKey: API_KEY,
-  authDomain: "member-portal-8a367.firebaseapp.com",
-  projectId: "member-portal-8a367",
-  storageBucket: "member-portal-8a367.appspot.com",
-  messagingSenderId: "389153166875",
-  appId: "1:389153166875:web:a2cde7e4ae132942d74abe",
-  measurementId: "G-4ZCLBGQ773",
+  authDomain: "showing-calendar-a72be.firebaseapp.com",
+  projectId: "showing-calendar-a72be",
+  storageBucket: "showing-calendar-a72be.appspot.com",
+  messagingSenderId: "244957298445",
+  appId: "1:244957298445:web:5caffd41522efdb771fa44",
+  measurementId: "G-ZJ5LS3D5KL"
 };
 
 const app = initializeApp(firebaseConfig);

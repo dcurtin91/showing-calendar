@@ -13,12 +13,12 @@ function App() {
       <Router>
         <Navigation />
         <Routes>
-          <Route exact path="/member-portal/" element={<Login />} />
-          <Route exact path="/member-portal/register" element={<Register />} />
-          <Route exact path="/member-portal/reset" element={<Reset />} />
-          <Route exact path="/member-portal/signupform" element={<SignUpForm />} />
-          <Route exact path="/member-portal/dashboard" element={<Dashboard />} />
-          <Route exact path="/member-portal/directory" element={<Directory />} />
+          <Route exact path="/showing-calendar/" element={<Login />} />
+          <Route exact path="/showing-calendar/register" element={<Register />} />
+          <Route exact path="/showing-calendar/reset" element={<Reset />} />
+          <Route exact path="/showing-calendar/signupform" element={<SignUpForm />} />
+          <Route exact path="/showing-calendardashboard" element={<Dashboard />} />
+          <Route exact path="/showing-calendar/directory" element={<Directory />} />
         </Routes>
       </Router>
     </div>

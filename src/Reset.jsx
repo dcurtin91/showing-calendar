@@ -9,12 +9,12 @@ import Col from "react-bootstrap/Col";
 
 function Reset() {
   const [email, setEmail] = useState("");
-  const [user, loading, error] = useAuthState(auth);
+  const [user, loading] = useAuthState(auth);
   const navigate = useNavigate();
 
   useEffect(() => {
     if (loading) return;
-    if (user) navigate("/member-portal/dashboard");
+    if (user) navigate("/showing-calendar/dashboard");
   }, [user, loading]);
 
   return (
@@ -69,7 +69,7 @@ function Reset() {
               }}
             >
               Don't have an account?{" "}
-              <Link className="navOption2" to="/member-portal/register">
+              <Link className="navOption2" to="/showing-calendar/register">
                 Register
               </Link>{" "}
               now.

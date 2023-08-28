@@ -77,7 +77,6 @@ function PhotoUpload() {
   };
 
   const deleteImage = async (url) => {
-    // Find the index of the image URL in the imageUrls array
     const index = imageUrls.findIndex((imageUrl) => imageUrl === url);
 
     if (index !== -1) {
@@ -117,7 +116,7 @@ function PhotoUpload() {
 
     // Cleanup function
     return () => {
-      isMounted = false; // Set the flag to false when unmounting
+      isMounted = false; 
     };
   }, []);
 
@@ -172,8 +171,8 @@ function PhotoUpload() {
             <div
               key={index}
               style={{
-                position: "relative", // Add this to make positioning relative for absolute children
-                display: "inline-block", // Adjust display property
+                position: "relative", 
+                display: "inline-block", 
                 margin: "20px",
               }}
             >

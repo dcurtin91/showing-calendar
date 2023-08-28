@@ -9,20 +9,17 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
 function Dashboard() {
-  const [user, loading, error] = useAuthState(auth);
+  const [user, loading] = useAuthState(auth);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState(" ");
   const [phone, setPhone] = useState(" ");
-  const [vacancy, setVacancy] = useState(" ");
-  const [availability, setAvailability] = useState(" ");
+  
 
   const navigate = useNavigate();
 
   const [isEditingName, setIsEditingName] = useState(false);
   const [isEditingEmail, setIsEditingEmail] = useState(false);
-  const [isEditingVacancy, setisEditingVacancy] = useState(false);
-  const [isEditingAvailability, setIsEditingAvailability] = useState(false);
   const [isEditingAddress, setIsEditingAddress] = useState(false);
   const [isEditingPhone, setIsEditingPhone] = useState(false);
 
@@ -37,8 +34,6 @@ function Dashboard() {
         setName(data.name);
         setEmail(data.email);
         setPhone(data.phone);
-        setVacancy(data.vacancy);
-        setAvailability(data.availability);
       } else {
         console.log("User data not found.");
       }
@@ -64,14 +59,6 @@ function Dashboard() {
     setPhone(event.target.value);
   };
 
-  const handleVacancyChange = (event) => {
-    setVacancy(event.target.value);
-  };
-
-  const handleAvailabilityChange = (event) => {
-    setAvailability(event.target.value);
-  };
-
   const handleAddressEdit = () => {
     setIsEditingAddress(true);
   };
@@ -88,14 +75,6 @@ function Dashboard() {
     setIsEditingPhone(true);
   };
 
-  const handleVacancyEdit = () => {
-    setisEditingVacancy(true);
-  };
-
-  const handleAvailabilityEdit = () => {
-    setIsEditingAvailability(true);
-  };
-
   const handleUpdate = async () => {
     try {
       const docId = user.uid;
@@ -106,8 +85,6 @@ function Dashboard() {
         name: name,
         email: email,
         phone: phone,
-        vacancy: vacancy,
-        availability: availability,
       });
 
       const updatedDoc = await getDoc(docRef);
@@ -116,13 +93,9 @@ function Dashboard() {
       setName(updatedData.name);
       setEmail(updatedData.email);
       setPhone(updatedData.phone);
-      setVacancy(updatedData.vacancy);
-      setAvailability(updatedData.availability);
 
       setIsEditingName(false);
       setIsEditingEmail(false);
-      setisEditingVacancy(false);
-      setIsEditingAvailability(false);
       setIsEditingAddress(false);
       setIsEditingPhone(false);
     } catch (error) {
@@ -132,7 +105,7 @@ function Dashboard() {
 
   useEffect(() => {
     if (loading) return;
-    if (!user) return navigate("/member-portal/");
+    if (!user) return navigate("/showing-calendar/");
 
     fetchUserData();
   }, [user, loading]);
@@ -172,7 +145,7 @@ function Dashboard() {
                 marginBottom: 0,
               }}
             >
-              Your Property Address and Contact Info
+              Building Address and Contact Info
             </Card.Header>
 
             <div className="dash_item">
@@ -227,42 +200,6 @@ function Dashboard() {
                 </>
               )}
             </div>
-            <div className="dash_item">
-              Vacancy:{" "}
-              {isEditingVacancy ? (
-                <select value={vacancy} onChange={handleVacancyChange}>
-                  <option value="Yes">Yes</option>
-                  <option value="No">No</option>
-                </select>
-              ) : (
-                <>
-                  {vacancy}{" "}
-                  <span className="edit-icon" onClick={handleVacancyEdit}>
-                    &#x270E;
-                  </span>
-                </>
-              )}
-            </div>
-
-            <div className="dash_item">
-              Capacity:{" "}
-              {isEditingAvailability ? (
-                <input
-                  type="number"
-                  value={availability}
-                  onChange={handleAvailabilityChange}
-                  min={0}
-                  max={10}
-                />
-              ) : (
-                <>
-                  {availability}{" "}
-                  <span className="edit-icon" onClick={handleAvailabilityEdit}>
-                    &#x270E;
-                  </span>
-                </>
-              )}
-            </div>
 
             <button
               style={{
@@ -297,7 +234,7 @@ function Dashboard() {
             marginBottom: 0,
           }}
         >
-          Upload an Image of Your Space
+          Image Upload
         </Card.Header>
         <PhotoUpload />
       </Card>

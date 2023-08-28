@@ -28,26 +28,26 @@ export default function Navigation() {
         {user && (
           <div style={{ marginLeft: "2rem" }}>
             <Link
-              to="/member-portal/directory"
-              className={`navOption ${isActive("/member-portal/directory")}`}
+              to="/showing-calendar/directory"
+              className={`navOption ${isActive("/showing-calendar/directory")}`}
             >
               Directory
             </Link>
           </div>
         )}
-        {user && ( // Check if user is logged in
+        {user && ( 
           <div style={{ marginLeft: "60rem" }}>
             <Link
-              to="/member-portal/dashboard"
-              className={`navOption ${isActive("/member-portal/dashboard")}`}
+              to="/showing-calendar/dashboard"
+              className={`navOption ${isActive("/showing-calendar/dashboard")}`}
             >
               Dashboard
             </Link>
           </div>
         )}
-        {user && ( // Check if user is logged in
+        {user && ( 
           <div style={{ marginRight: "2rem" }}>
-            <Link to="/member-portal" className="navOption" onClick={logout}>
+            <Link to="/showing-calendar" className="navOption" onClick={logout}>
               Log Out
             </Link>
           </div>
