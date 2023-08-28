@@ -9,7 +9,7 @@ import Col from "react-bootstrap/Col";
 function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [user, loading, error] = useAuthState(auth);
+  const [user, loading] = useAuthState(auth);
   const navigate = useNavigate();
 
   const register = () => {
@@ -18,7 +18,7 @@ function Register() {
 
   useEffect(() => {
     if (loading) return;
-    if (user) navigate("/member-portal/signupform");
+    if (user) navigate("/showing-calendar/signupform");
   }, [user, loading]);
 
   const handleKeyPress = (e) => {
@@ -63,7 +63,7 @@ function Register() {
               }}
             >
               Already have an account?{" "}
-              <Link className="navOption2" to="/member-portal/" tabIndex={-1}>
+              <Link className="navOption2" to="/showing-calendar/" tabIndex={-1}>
                 Login
               </Link>{" "}
               now.

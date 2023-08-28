@@ -4,7 +4,7 @@ import Register from "./Register";
 import Reset from "./Reset";
 import Dashboard from "./Dashboard";
 import Directory from "./Directory";
-import { SignUpForm } from "./signUpForm";
+import { SignUpForm } from "./SignUpForm";
 import Navigation from "./Navbar";
 
 function App() {

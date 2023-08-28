@@ -21,9 +21,9 @@ function Login() {
         //const collectionName = `${user.uid}`;
         const querySnapshot = await getDocs(collection(db, "properties"));
         if (!querySnapshot.empty) {
-          navigate("/member-portal/dashboard");
+          navigate("/showing-calendar/dashboard");
         } else {
-          navigate("/member-portal/signupform");
+          navigate("/showing-calendar/signupform");
         }
       };
 
@@ -70,7 +70,7 @@ function Login() {
             <div style={{ marginTop: "10px", display: "flex" }}>
               <Link
                 className="navOption2"
-                to="/member-portal/reset"
+                to="/showing-calendar/reset"
                 tabIndex={-1}
               >
                 Forgot Password
@@ -86,7 +86,7 @@ function Login() {
               Don't have an account?{" "}
               <Link
                 className="navOption2"
-                to="/member-portal/register"
+                to="/showing-calendar/register"
                 tabIndex={-1}
               >
                 Register
