@@ -82,9 +82,7 @@ async function sendMessage(
   address,
   name,
   email,
-  phone,
-  vacancy,
-  availability
+  phone
 ) {
   try {
     const docId = user.uid; // Use the User UID as the document ID
@@ -95,8 +93,6 @@ async function sendMessage(
       name: name,
       email: email,
       phone: phone,
-      vacancy: vacancy ? "Yes" : "No",
-      availability: availability,
       timestamp: serverTimestamp(),
     });
   } catch (error) {
@@ -109,9 +105,7 @@ async function updateMessage(
   address,
   name,
   email,
-  phone,
-  vacancy,
-  availability
+  phone
 ) {
   try {
     const docId = user.uid;
@@ -123,9 +117,7 @@ async function updateMessage(
         address: address,
         name: name,
         email: email,
-        phone: phone,
-        vacancy: vacancy ? "Yes" : "No",
-        availability: availability,
+        phone: phone
       });
     }
   } catch (error) {

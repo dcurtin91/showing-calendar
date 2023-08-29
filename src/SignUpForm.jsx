@@ -14,13 +14,11 @@ function SignUpForm() {
     name: "",
     email: "",
     phone: "",
-    vacancy: false,
-    availability: "",
   });
 
   const handleChange = (event) => {
-    const { name, value, type, checked } = event.target;
-    const newValue = type === "checkbox" ? checked : value;
+    const { name, value } = event.target;
+    const newValue = value;
 
     setFormData((prevData) => ({
       ...prevData,
@@ -36,16 +34,12 @@ function SignUpForm() {
       formData.name,
       formData.email,
       formData.phone,
-      formData.vacancy,
-      formData.availability
     );
     setFormData({
       address: "",
       name: "",
       email: "",
       phone: "",
-      vacancy: false,
-      availability: "",
     });
     navigate("/showing-calendar/dashboard");
   };
@@ -84,7 +78,7 @@ function SignUpForm() {
                 marginBottom: 0,
               }}
             >
-              Sign Up as a Host
+              Sign Up
             </Card.Header>
             <form onSubmit={handleSubmit} style={{ padding: "2em" }}>
               <input
@@ -129,31 +123,7 @@ function SignUpForm() {
                 className="login__textBox"
                 minLength={1}
               />
-              <label style={{ marginTop: "15px", fontSize: "13px" }}>
-                <input
-                  type="checkbox"
-                  name="vacancy"
-                  checked={formData.vacancy}
-                  onChange={handleChange}
-                  placeholder="number of rooms available"
-                />{" "}
-                Vacancy?
-              </label>
-              <br></br>
-              <div style={{ marginTop: "15px", fontSize: "13px" }}>
-                {" "}
-                Capacity{" "}
-              </div>
-              <input
-                style={{ marginTop: "5px", fontSize: "13px" }}
-                type="number"
-                name="availability"
-                placeholder="1"
-                value={formData.availability}
-                onChange={handleChange}
-                min={0}
-                max={10}
-              />
+              
 
               <br></br>
               <br></br>

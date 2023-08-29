@@ -17,7 +17,7 @@ function App() {
           <Route exact path="/showing-calendar/register" element={<Register />} />
           <Route exact path="/showing-calendar/reset" element={<Reset />} />
           <Route exact path="/showing-calendar/signupform" element={<SignUpForm />} />
-          <Route exact path="/showing-calendardashboard" element={<Dashboard />} />
+          <Route exact path="/showing-calendar/dashboard" element={<Dashboard />} />
           <Route exact path="/showing-calendar/directory" element={<Directory />} />
         </Routes>
       </Router>
