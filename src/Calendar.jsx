@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from "react";
 import moment from 'moment';
 
 import { Grid } from '@mui/material';
@@ -31,6 +31,13 @@ function Calendar() {
 
     const toggleMonthSelect = () => setShowMonthTable(!showMonthTable);
 
+    const defaultSelectedDay = {
+        day: moment().format("D"),
+        month: moment().month()
+        }
+    const [selectedDay, setSelected] = useState(defaultSelectedDay);
+    
+    
     const setSelectedDay = day => {
         setSelected({
                 day,
