@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { auth, db } from "./firebase";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import PhotoUpload from "./PhotoUpload";
+import Calendar from "./Calendar";
 import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -237,6 +238,28 @@ function Dashboard() {
           Image Upload
         </Card.Header>
         <PhotoUpload />
+      </Card>
+      <Card
+        style={{
+          border: "1px solid black",
+          backgroundColor: "lightgrey",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Card.Header
+          style={{
+            backgroundColor: "lightsteelblue",
+            width: "100%",
+            marginTop: "0px",
+            textAlign: "center",
+            marginBottom: 0,
+          }}
+        >
+          Image Upload
+        </Card.Header>
+        <Calendar />
       </Card>
     </div>
   );
