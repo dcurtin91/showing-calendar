@@ -43,7 +43,7 @@ function AddActivity(props) {
     // Add the activity to firebase via the API made in this app
     const handleSubmit = () => {
         if (user) {
-            addIt(activity);
+            addIt(uid, activity);
             setActivity(defaultActivity);
             // Show notification
             setOpenSnackbar(true);

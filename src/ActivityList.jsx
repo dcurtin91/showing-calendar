@@ -21,7 +21,7 @@ function ActivityList(props) {
             time: null
        };
 
-       editIt(emptyActivity, activityKey);
+      editIt(emptyActivity, activityKey);
 
        // Show notification
        setOpenSnackbar(true);

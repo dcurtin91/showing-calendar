@@ -10,7 +10,7 @@ import EditActivity from "./EditActivity";
 import ActivityList from "./ActivityList";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "./firebase";
-import { getDocs, collection, query, where } from "firebase/firestore";
+import { getDocs, collection, query, where, getDoc, doc } from "firebase/firestore";
 
 
 function Calendar() {
@@ -64,47 +64,80 @@ function Calendar() {
 
     /*** ACTIVITY LIST ***/
     const [activities, setActivities] = useState(true);
-    const [activeDays, setActiveDays] = useState([]);
+    //const [activeDays, setActiveDays] = useState([]);
 
-  
-
-    const activitiesCollectionRef = collection(db, "properties", "calendar", "events");
-
-    useEffect(() => {
-        async function fetchData() {
-          try {
+    const fetchData = async () => {
+        try {
+            const activitiesCollectionRef = collection(db, "properties", user.uid, "events");
             const queryDate = `${selectedDay.month + 1}-${selectedDay.day}-${selectedDay.year}`;
+            console.log(queryDate);
             const querySnapshot = await getDocs(query(activitiesCollectionRef, where("date", "==", queryDate)));
-            const data = querySnapshot.docs.map((doc) => doc.data());
-            setActivities(data);
-            setEditing(false);
-          } catch (error) {
-            console.error(error);
-          }
-        }
-      
-        async function fetchActiveDays() {
-          try {
-            const querySnapshot = await getDocs(activitiesCollectionRef);
-            const data = querySnapshot.docs.map((doc) => {
-                const activity = doc.data();
-                if (activity.date) {
-                  return activity.date.length === 8 ? activity.date.slice(0, 3) : activity.date.slice(0, 4);
+            
+            if (!querySnapshot.empty) {
+                // Get the first document in the snapshot
+                const docSnapshot = querySnapshot.docs[0];
+                const docId = docSnapshot.id;
+                
+                const docRef = await getDoc(doc(db, "properties", user.uid, "events", docId));
+        
+                if (docRef.exists()) {
+                    const data = docRef.data();
+                    setActivities(data);
+                    setEditing(false);
                 }
-                return null; 
-              });
-              
-            setActiveDays(data);
-          } catch (error) {
-            console.error(error);
-          }
+            } else {
+                // Handle the case where no documents match the query
+                console.log("No matching documents found.");
+            }
+        } catch (err) {
+            console.error(err);
         }
+    };
+    
+
+      useEffect(() => {
+        if (!user) return navigate("/showing-calendar/admin-login");
+    
+        fetchData();
+      }, [user]);
+
+    // const activitiesCollectionRef = collection(db, "properties", user.uid, "events");
+
+    // useEffect(() => {
+    //     async function fetchData() {
+    //       try {
+    //         const queryDate = `${selectedDay.month + 1}-${selectedDay.day}-${selectedDay.year}`;
+    //         const querySnapshot = await getDocs(query(activitiesCollectionRef, where("date", "==", queryDate)));
+    //         const data = querySnapshot.docs.map((doc) => doc.data());
+    //         setActivities(data);
+    //         setEditing(false);
+    //       } catch (error) {
+    //         console.error(error);
+    //       }
+    //     }
       
-        fetchData(); 
-        fetchActiveDays();
+    //     async function fetchActiveDays() {
+    //       try {
+    //         const querySnapshot = await getDocs(activitiesCollectionRef);
+    //         const data = querySnapshot.docs.map((doc) => {
+    //             const activity = doc.data();
+    //             if (activity.date) {
+    //               return activity.date.length === 8 ? activity.date.slice(0, 3) : activity.date.slice(0, 4);
+    //             }
+    //             return null; 
+    //           });
+              
+    //         setActiveDays(data);
+    //       } catch (error) {
+    //         console.error(error);
+    //       }
+    //     }
+      
+    //     fetchData(); 
+    //     fetchActiveDays();
       
     
-      }, [selectedDay]);
+    //   }, [selectedDay]);
       
 
     /*** EDIT AN ACTIVITY ***/
@@ -139,7 +172,7 @@ function Calendar() {
                         setSelectedDay={setSelectedDay}
                         selectedDay={selectedDay}
                         weekdays={moment.weekdays()}
-                        activeDays={activeDays}
+                        //activeDays={activeDays}
                     />
             </Grid>
             <Grid item xs={12} md={4} lg={3}>

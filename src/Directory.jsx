@@ -27,15 +27,13 @@ const Directory = () => {
 
     
     Promise.all(
-      messages.map((message) => {
+      messages.map(async (message) => {
         const imagesListRef = ref(storage, `${message.uid}`);
-        return listAll(imagesListRef).then((response) => {
-          return Promise.all(
-            response.items.map((item) => getDownloadURL(item))
-          ).then((urls) => {
-            accumulatedUrls[message.uid] = urls; 
-          });
-        });
+        const response = await listAll(imagesListRef);
+        const urls = await Promise.all(
+          response.items.map((item) => getDownloadURL(item))
+        );
+        accumulatedUrls[message.uid] = urls;
       })
     ).then(() => {
       if (isMounted) {

@@ -138,9 +138,9 @@ function getMessages(callback) {
   });
 }
 
-async function addIt(activity) {
+async function addIt(uid, activity) {
   try {
-    const collectionRef = collection(db, "properties", "calendar", "events");
+    const collectionRef = collection(db, "properties", uid, "events");
     await addDoc(collectionRef, {
       activity: activity,
       timestamp: serverTimestamp(),
@@ -151,9 +151,10 @@ async function addIt(activity) {
 }
 
 
+
 const editIt = async (activity, activityKey) => {
   try {
-    const docRef = doc(db, `properties/calendar/events/${activityKey}`);
+    const docRef = doc(db, "properties", uid, "events", activityKey);
     await updateDoc(docRef, {
       name: activity.name,
       type: activity.type,

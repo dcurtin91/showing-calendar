@@ -36,7 +36,7 @@ function EditActivity(props) {
     // Add the activity to firebase via the API made in this app
     const handleSubmit = () => {
         if (user) {
-            editIt(newActivity, activityKey);
+            editIt(uid, newActivity, activityKey);
             setEditing(false);
             // Show alert and hide after 3sec
             setOpenSnackbar(true);
