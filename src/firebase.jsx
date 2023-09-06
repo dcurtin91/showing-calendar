@@ -138,6 +138,23 @@ function getMessages(callback) {
   });
 }
 
+async function addIt(
+  user,
+  activity
+) {
+  try {
+    
+    const docRef = doc(db, "properties", "activities"); // Create a document reference with the specified ID
+    await setDoc(docRef, {
+      
+      activity: activity,
+      timestamp: serverTimestamp(),
+    });
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 export {
   auth,
   db,
@@ -148,5 +165,6 @@ export {
   sendMessage,
   getMessages,
   updateMessage,
-  storage
+  storage,
+  addIt
 };

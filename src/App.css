@@ -135,3 +135,7 @@ svg.MuiSvgIcon-root:hover {
   cursor: pointer;
   opacity: .5;
 }
+
+#event-time-input::-webkit-calendar-picker-indicator {
+  filter: invert(1); 
+}

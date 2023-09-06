@@ -8,7 +8,7 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper
 
 const CalendarBody = props => {
 
-    const { firstDayOfMonth, daysInMonth, currentDay, currentMonth, currentMonthNum, selectedDay, activeDays, setSelectedDay, actualMonth, weekdays } = props;
+    const { firstDayOfMonth, daysInMonth, currentDay, currentMonth, currentMonthNum, selectedDay, setSelectedDay, actualMonth, weekdays } = props;
 
     let blanks = [];
     for (let i = 0; i < firstDayOfMonth(); i++) {
@@ -58,17 +58,18 @@ const CalendarBody = props => {
     return (
         <TableContainer component={Paper}>
             <Table className="calendar">
-                <TableHead>
-                    <TableRow>
-                        {
-                            weekdays.map((day, i) => (
-                                <TableCell key={i}>
-                                    {day}
-                                </TableCell>
-                            ))
-                        }
-                    </TableRow>
-                </TableHead>
+            <TableHead>
+                
+                <TableRow>
+                    {
+                        weekdays.map((day, i) => (
+                            <TableCell key={i}>
+                                {day}
+                            </TableCell>
+                        ))
+                    }
+                </TableRow>
+            </TableHead>
                 <TableBody>
                     {
                         rows.map((day, i) => 

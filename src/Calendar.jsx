@@ -1,17 +1,19 @@
 import React, { useState } from "react";
 import moment from 'moment';
 
-import { Grid } from '@mui/material';
+import { Grid, Snackbar, Paper } from '@mui/material';
 import "./App.css";
 import CalendarBody from './calendar-body';
 import CalendarHead from './calendar-head';
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "./firebase";
+import AddActivity from "./AddActivity";
 
 
 function Calendar() {
 
-    const [user] = useAuthState(auth);
+    const defaultSelectedDay = {
+        day: moment().format("D"),
+        month: moment().month()
+        }
 
     const [dateObject, setdateObject] = useState(moment());
     const [showMonthTable, setShowMonthTable] = useState(false);
@@ -31,10 +33,7 @@ function Calendar() {
 
     const toggleMonthSelect = () => setShowMonthTable(!showMonthTable);
 
-    const defaultSelectedDay = {
-        day: moment().format("D"),
-        month: moment().month()
-        }
+    
     const [selectedDay, setSelected] = useState(defaultSelectedDay);
     
     
@@ -52,6 +51,9 @@ function Calendar() {
     const actualMonth = () => moment().format("MMMM");
     
     const firstDayOfMonth = () => moment(dateObject).startOf("month").format("d");
+
+    const [openSnackbar, setOpenSnackbar] = useState(false);
+    const [snackbarMsg, setSnackbarMsg] = useState(null);
 
     return (
         <Grid container spacing={3}>
@@ -73,9 +75,32 @@ function Calendar() {
                         actualMonth={actualMonth}
                         setSelectedDay={setSelectedDay}
                         selectedDay={selectedDay}
-                        
+                        weekdays={moment.weekdays()}
                     />
             </Grid>
+            <Grid item xs={12} md={4} lg={3}>
+                <Paper className="paper">
+                    
+                            <>
+                                <h3>Add activity on {selectedDay.day}-{selectedDay.month + 1} </h3>
+                                <AddActivity 
+                                    selectedDay={selectedDay} 
+                                    
+                                    setOpenSnackbar={setOpenSnackbar}
+                                    setSnackbarMsg={setSnackbarMsg}
+                                />
+                            </>
+                    
+                </Paper>
+            </Grid>
+            <Snackbar 
+                anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'right',
+                }}
+                open={openSnackbar} 
+                message={snackbarMsg}
+            />
         </Grid>
     )
 };
