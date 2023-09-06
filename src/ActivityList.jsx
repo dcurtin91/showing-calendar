@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "./firebase";
+import { auth, editIt } from "./firebase";
 import "./App.css";
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 import { Delete, Edit } from '@mui/icons-material';
@@ -8,7 +8,7 @@ import { Delete, Edit } from '@mui/icons-material';
 function ActivityList(props) {
     const [user] = useAuthState(auth);
     const uid = user.uid;
-    const {activities, editActivity,setOpenSnackbar, setSnackbarMsg, setEditing} = props;
+    const {activities, editActivity, setOpenSnackbar, setSnackbarMsg, setEditing} = props;
 
     const deleteActivity = (i) => {
         // Get key of activity in firebase
@@ -21,7 +21,7 @@ function ActivityList(props) {
             time: null
        };
 
-       props.firebase.updateActivity(uid, emptyActivity, activityKey);
+       editIt(emptyActivity, activityKey);
 
        // Show notification
        setOpenSnackbar(true);

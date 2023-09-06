@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper  } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 import { ArrowDropDownCircleRounded } from '@mui/icons-material';
 
 const CalendarHead = props => {

@@ -140,8 +140,8 @@ function getMessages(callback) {
 
 async function addIt(activity) {
   try {
-    const docRef = doc(db, "properties", "activities"); // Create a document reference with the specified ID
-    await setDoc(docRef, {
+    const collectionRef = collection(db, "properties", "calendar", "events");
+    await addDoc(collectionRef, {
       activity: activity,
       timestamp: serverTimestamp(),
     });
@@ -150,22 +150,21 @@ async function addIt(activity) {
   }
 }
 
-async function editIt(activity, activityKey) {
-  try {
-    const docRef = await getDoc(doc(db, `properties/activities/${activityKey}`));
 
-    if (docRef.exists()) {
-      await updateDoc(docRef, {
-        name: activity.name,
-        type: activity.type,
-        date: activity.date,
-        time: activity.time,
-      });
-    }
+const editIt = async (activity, activityKey) => {
+  try {
+    const docRef = doc(db, `properties/calendar/events/${activityKey}`);
+    await updateDoc(docRef, {
+      name: activity.name,
+      type: activity.type,
+      date: activity.date,
+      time: activity.time,
+    });
   } catch (error) {
     console.error(error);
   }
-}
+};
+
 
 export {
   auth,

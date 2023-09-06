@@ -4,7 +4,7 @@ import { resolve } from 'path'; // Add this line
 
 export default defineConfig({
   plugins: [react()],
-  base: "/showing-calendar/",
+  base: "/showing-calendar/admin-login",
   build: {
     rollupOptions: {
       input: {

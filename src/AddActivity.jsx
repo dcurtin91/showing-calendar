@@ -16,7 +16,7 @@ function AddActivity(props) {
 
     // Set query date for updating database
     selectedDay.year = new Date().getFullYear();
-    let queryDate = `${selectedDay.day}-${selectedDay.month}-${selectedDay.year}`;
+    let queryDate = `${selectedDay.month + 1}-${selectedDay.day}-${selectedDay.year}`;
 
     // Set default activity object
     const defaultActivity = {
@@ -43,7 +43,7 @@ function AddActivity(props) {
     // Add the activity to firebase via the API made in this app
     const handleSubmit = () => {
         if (user) {
-            addIt(uid, activity);
+            addIt(activity);
             setActivity(defaultActivity);
             // Show notification
             setOpenSnackbar(true);
