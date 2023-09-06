@@ -13,11 +13,11 @@ function App() {
       <Router>
         <Navigation />
         <Routes>
-          <Route exact path="/showing-calendar/" element={<Login />} />
-          <Route exact path="/showing-calendar/register" element={<Register />} />
-          <Route exact path="/showing-calendar/reset" element={<Reset />} />
-          <Route exact path="/showing-calendar/signupform" element={<SignUpForm />} />
-          <Route exact path="/showing-calendar/dashboard" element={<Dashboard />} />
+          <Route exact path="/showing-calendar/admin-login" element={<Login />} />
+          <Route exact path="/showing-calendar/register-admin" element={<Register />} />
+          <Route exact path="/showing-calendar/admin-reset" element={<Reset />} />
+          <Route exact path="/showing-calendar/admin-signupform" element={<SignUpForm />} />
+          <Route exact path="/showing-calendar/admin-dashboard" element={<Dashboard />} />
           <Route exact path="/showing-calendar/directory" element={<Directory />} />
         </Routes>
       </Router>

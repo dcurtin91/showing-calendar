@@ -14,7 +14,7 @@ function Reset() {
 
   useEffect(() => {
     if (loading) return;
-    if (user) navigate("/showing-calendar/dashboard");
+    if (user) navigate("/showing-calendar/admin-dashboard/");
   }, [user, loading]);
 
   return (
@@ -69,7 +69,7 @@ function Reset() {
               }}
             >
               Don't have an account?{" "}
-              <Link className="navOption2" to="/showing-calendar/register">
+              <Link className="navOption2" to="/showing-calendar/register-admin/">
                 Register
               </Link>{" "}
               now.

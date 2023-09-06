@@ -38,7 +38,7 @@ export default function Navigation() {
         {user && ( 
           <div style={{ marginLeft: "60rem" }}>
             <Link
-              to="/showing-calendar/dashboard"
+              to="/showing-calendar/admin-dashboard"
               className={`navOption ${isActive("/showing-calendar/dashboard")}`}
             >
               Dashboard
@@ -47,7 +47,7 @@ export default function Navigation() {
         )}
         {user && ( 
           <div style={{ marginRight: "2rem" }}>
-            <Link to="/showing-calendar" className="navOption" onClick={logout}>
+            <Link to="/showing-calendar/admin-login" className="navOption" onClick={logout}>
               Log Out
             </Link>
           </div>

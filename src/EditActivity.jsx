@@ -1,57 +1,50 @@
 import React, { useState } from 'react';
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth, addIt } from "./firebase";
+import { auth, editIt } from "./firebase";
 import "./App.css";
 import { Button, TextField, Select, MenuItem, FormControl, Typography } from '@mui/material';
 
 
-function AddActivity(props) {
+
+function EditActivity(props) {
     const [user] = useAuthState(auth);
-   
 
-    const {selectedDay, setOpenSnackbar, setSnackbarMsg} = props;
+    const {activity, activityKey, setEditing, setOpenSnackbar, setSnackbarMsg} = props;
     const uid = user.uid;
-
-    
-
-    // Set query date for updating database
-    selectedDay.year = new Date().getFullYear();
-    let queryDate = `${selectedDay.day}-${selectedDay.month}-${selectedDay.year}`;
 
     // Set default activity object
     const defaultActivity = {
-        name: '',
-        type: 1,
-        date: queryDate,
-        time: '00:00',
+        name: activity.name,
+        type: activity.type,
+        date: activity.date,
+        time: activity.time,
     }
 
-    const [activity, setActivity] = useState(defaultActivity);
+    const [newActivity, setNewActivity] = useState(defaultActivity);
 
     const handleChange = e => {
         const { name, value } = e.target
-        setActivity({
-            ...activity, 
-            date: queryDate,
+        setNewActivity({
+            ...newActivity, 
             [name]: value});
     }
 
    
 
-    const isValid = activity.name === '';
+    const isValid = newActivity.name === '';
 
     // Add the activity to firebase via the API made in this app
     const handleSubmit = () => {
         if (user) {
-            addIt(uid, activity);
-            setActivity(defaultActivity);
-            // Show notification
+            editIt(uid, newActivity, activityKey);
+            setEditing(false);
+            // Show alert and hide after 3sec
             setOpenSnackbar(true);
-            setSnackbarMsg('Added Event');
+            setSnackbarMsg('Updated Event');
             setTimeout(() => {
                 setOpenSnackbar(false)
             }, 3000)
-        }
+        };
     }
 
     return (
@@ -109,13 +102,13 @@ function AddActivity(props) {
                 fullWidth
                 variant="contained"
                 color="primary"
-                onClick={handleSubmit}
+                onClick={() => handleSubmit('add')}
                 disabled={isValid}
             >
-            Add Event
+            Save activity
             </Button>
         </form>
     )
 };
 
-export default AddActivity;
+export default EditActivity;

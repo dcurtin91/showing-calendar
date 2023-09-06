@@ -18,7 +18,7 @@ function Register() {
 
   useEffect(() => {
     if (loading) return;
-    if (user) navigate("/showing-calendar/signupform");
+    if (user) navigate("/showing-calendar/admin-signupform/");
   }, [user, loading]);
 
   const handleKeyPress = (e) => {
@@ -63,7 +63,7 @@ function Register() {
               }}
             >
               Already have an account?{" "}
-              <Link className="navOption2" to="/showing-calendar/" tabIndex={-1}>
+              <Link className="navOption2" to="/showing-calendar/admin-login/" tabIndex={-1}>
                 Login
               </Link>{" "}
               now.

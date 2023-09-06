@@ -106,7 +106,7 @@ function Dashboard() {
 
   useEffect(() => {
     if (loading) return;
-    if (!user) return navigate("/showing-calendar/");
+    if (!user) return navigate("/showing-calendar/admin-login");
 
     fetchUserData();
   }, [user, loading]);

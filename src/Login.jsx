@@ -18,12 +18,12 @@ function Login() {
   useEffect(() => {
     if (user) {
       const checkUserDocs = async () => {
-        //const collectionName = `${user.uid}`;
+        
         const querySnapshot = await getDocs(collection(db, "properties"));
         if (!querySnapshot.empty) {
-          navigate("/showing-calendar/dashboard");
+          navigate("/showing-calendar/admin-dashboard");
         } else {
-          navigate("/showing-calendar/signupform");
+          navigate("/showing-calendar/admin-signupform");
         }
       };
 
@@ -70,7 +70,7 @@ function Login() {
             <div style={{ marginTop: "10px", display: "flex" }}>
               <Link
                 className="navOption2"
-                to="/showing-calendar/reset"
+                to="/showing-calendar/admin-reset"
                 tabIndex={-1}
               >
                 Forgot Password
@@ -86,7 +86,7 @@ function Login() {
               Don't have an account?{" "}
               <Link
                 className="navOption2"
-                to="/showing-calendar/register"
+                to="/showing-calendar/register-admin"
                 tabIndex={-1}
               >
                 Register

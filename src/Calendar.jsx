@@ -6,6 +6,7 @@ import "./App.css";
 import CalendarBody from './calendar-body';
 import CalendarHead from './calendar-head';
 import AddActivity from "./AddActivity";
+import EditActivity from "./EditActivity";
 
 
 function Calendar() {
@@ -55,6 +56,17 @@ function Calendar() {
     const [openSnackbar, setOpenSnackbar] = useState(false);
     const [snackbarMsg, setSnackbarMsg] = useState(null);
 
+    /*** EDIT AN ACTIVITY ***/
+    const [editing, setEditing] = useState(false);
+    const [activity, setActivity] = useState(null);
+    const [activityKey, setActivityKey] = useState(null);
+
+    const editActivity = (activity, i) => {
+        setActivityKey(Object.keys(activities)[i]);
+        setEditing(true);
+        setActivity(activity);
+    }
+
     return (
         <Grid container spacing={3}>
             <Grid item xs={12} md={8} lg={9}>
@@ -80,17 +92,31 @@ function Calendar() {
             </Grid>
             <Grid item xs={12} md={4} lg={3}>
                 <Paper className="paper">
-                    
+                { editing
+                        ?
                             <>
-                                <h3>Add activity on {selectedDay.day}-{selectedDay.month + 1} </h3>
-                                <AddActivity 
+                                <h3>Edit activity on {selectedDay.day}-{selectedDay.month + 1} </h3>
+                                <EditActivity 
+                                    activity={activity}
+                                    activityKey={activityKey}
                                     selectedDay={selectedDay} 
-                                    
+                                    authUser={props.authUser}
+                                    setEditing={setEditing}
                                     setOpenSnackbar={setOpenSnackbar}
                                     setSnackbarMsg={setSnackbarMsg}
                                 />
                             </>
-                    
+                        :
+                            <>
+                                <h3>Add activity on {selectedDay.day}-{selectedDay.month + 1} </h3>
+                                <AddActivity 
+                                    selectedDay={selectedDay} 
+                                    authUser={props.authUser}
+                                    setOpenSnackbar={setOpenSnackbar}
+                                    setSnackbarMsg={setSnackbarMsg}
+                                />
+                            </>
+                    }
                 </Paper>
             </Grid>
             <Snackbar 

@@ -41,7 +41,7 @@ function SignUpForm() {
       email: "",
       phone: "",
     });
-    navigate("/showing-calendar/dashboard");
+    navigate("/showing-calendar/admin-dashboard/");
   };
 
   return (
