@@ -19,6 +19,9 @@ import {
   doc,
   getDoc,
   setDoc,
+  getDocs,
+  query,
+  where
 } from "firebase/firestore";
 
 const API_KEY = import.meta.env.VITE_SOME_KEY;
@@ -167,6 +170,26 @@ const editIt = async (activity, activityKey) => {
 };
 
 
+async function fetchActivities(uid, queryDate) {
+  try {
+    const collectionRef = collection(db, "properties", uid, "events");
+    const querySnapshot = await getDocs(
+      query(collectionRef, where("date", "==", queryDate))
+    );
+
+    const activities = [];
+    querySnapshot.forEach((doc) => {
+      activities.push(doc.data());
+    });
+
+    return activities;
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+  
+}
+
 export {
   auth,
   db,
@@ -179,5 +202,6 @@ export {
   updateMessage,
   storage,
   addIt,
-  editIt
+  editIt,
+  fetchActivities
 };

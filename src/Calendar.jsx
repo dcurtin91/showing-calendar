@@ -69,9 +69,9 @@ function Calendar() {
     const fetchData = async () => {
         try {
             const activitiesCollectionRef = collection(db, "properties", user.uid, "events");
-            const queryDate = `${selectedDay.month + 1}-${selectedDay.day}-${selectedDay.year}`;
-            console.log(queryDate);
-            const querySnapshot = await getDocs(query(activitiesCollectionRef, where("date", "==", queryDate)));
+            //const queryDate = `${selectedDay.month + 1}-${selectedDay.day}-${selectedDay.year}`;
+            const querySnapshot = await getDocs(query(activitiesCollectionRef));
+            //, where("date", "==", queryDate)
             
             if (!querySnapshot.empty) {
                 // Get the first document in the snapshot
@@ -101,43 +101,7 @@ function Calendar() {
         fetchData();
       }, [user]);
 
-    // const activitiesCollectionRef = collection(db, "properties", user.uid, "events");
 
-    // useEffect(() => {
-    //     async function fetchData() {
-    //       try {
-    //         const queryDate = `${selectedDay.month + 1}-${selectedDay.day}-${selectedDay.year}`;
-    //         const querySnapshot = await getDocs(query(activitiesCollectionRef, where("date", "==", queryDate)));
-    //         const data = querySnapshot.docs.map((doc) => doc.data());
-    //         setActivities(data);
-    //         setEditing(false);
-    //       } catch (error) {
-    //         console.error(error);
-    //       }
-    //     }
-      
-    //     async function fetchActiveDays() {
-    //       try {
-    //         const querySnapshot = await getDocs(activitiesCollectionRef);
-    //         const data = querySnapshot.docs.map((doc) => {
-    //             const activity = doc.data();
-    //             if (activity.date) {
-    //               return activity.date.length === 8 ? activity.date.slice(0, 3) : activity.date.slice(0, 4);
-    //             }
-    //             return null; 
-    //           });
-              
-    //         setActiveDays(data);
-    //       } catch (error) {
-    //         console.error(error);
-    //       }
-    //     }
-      
-    //     fetchData(); 
-    //     fetchActiveDays();
-      
-    
-    //   }, [selectedDay]);
       
 
     /*** EDIT AN ACTIVITY ***/

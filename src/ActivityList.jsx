@@ -54,7 +54,7 @@ function ActivityList(props) {
                             <TableBody>
                             {
                                 Object.values(activities).map((activity, i) => {
-                                    let {name, type, time} = activity;
+                                    let {name, type, date, time} = activity;
                                     switch(activity.type) {
                                         case 1:
                                             type = "Showing";
@@ -69,6 +69,7 @@ function ActivityList(props) {
                                         <TableRow key={i}>
                                             <TableCell>{name}</TableCell>
                                             <TableCell>{type}</TableCell>
+                                            <TableCell>{date}</TableCell>
                                             <TableCell>{time}</TableCell>
                                             <TableCell>
                                                 <Delete
