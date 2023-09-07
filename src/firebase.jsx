@@ -24,11 +24,11 @@ import {
   where
 } from "firebase/firestore";
 
-const API_KEY = import.meta.env.VITE_SOME_KEY;
+//const API_KEY = import.meta.env.VITE_SOME_KEY;
 
 
 const firebaseConfig = {
-  apiKey: API_KEY,
+  apiKey: "AIzaSyAUvc1RyHIQNW-wID9H4Hr6zs6Y4LyG0fk",
   authDomain: "showing-calendar-a72be.firebaseapp.com",
   projectId: "showing-calendar-a72be",
   storageBucket: "showing-calendar-a72be.appspot.com",
