@@ -98,8 +98,8 @@ function AddActivity(props) {
                         name="type"
                         onChange={handleChange}
                     >
-                        <MenuItem value={1}>Showing</MenuItem>
-                        <MenuItem value={2}>Block Time as Unavailable</MenuItem>
+                        <MenuItem value={1} name="showing">Showing</MenuItem>
+                        <MenuItem value={2} name="unavailable">Block Time/Unavailable</MenuItem>
                     </Select>
                 </div>
                 

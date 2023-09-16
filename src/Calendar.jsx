@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from "react";
 import moment from 'moment';
-
 import { Grid, Snackbar, Paper } from '@mui/material';
 import "./App.css";
 import CalendarBody from './calendar-body';
-import CalendarHead from './calendar-head';
+import CalendarHead from './calendarhead';
 import AddActivity from "./AddActivity";
-import EditActivity from "./EditActivity";
-import ActivityList from "./ActivityList";
+import EditActivity from "./Edit";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "./firebase";
-import { getDocs, collection, query, where, getDoc, doc } from "firebase/firestore";
+import { getDocs, collection } from "firebase/firestore";
 
 
 function Calendar() {
@@ -18,7 +16,8 @@ function Calendar() {
 
     const defaultSelectedDay = {
         day: moment().format("D"),
-        month: moment().month()
+        month: moment().month(),
+        year: moment().year()
         }
 
     const [dateObject, setdateObject] = useState(moment());
@@ -45,11 +44,12 @@ function Calendar() {
     
     const setSelectedDay = day => {
         setSelected({
-                day,
-                month: currentMonthNum()
+            day,
+            month: currentMonthNum(),
+            year: moment().year() 
         });
-         // Later refresh data
     };
+    
     
     const currentMonthNum = () => dateObject.month();
     const daysInMonth = () => dateObject.daysInMonth();
@@ -63,36 +63,29 @@ function Calendar() {
     const [snackbarMsg, setSnackbarMsg] = useState(null);
 
     /*** ACTIVITY LIST ***/
-    const [activities, setActivities] = useState(true);
-    //const [activeDays, setActiveDays] = useState([]);
+    const [events, setEvents] = useState([]); 
 
-    const fetchData = async () => {
-        try {
-            const activitiesCollectionRef = collection(db, "properties", user.uid, "events");
-            //const queryDate = `${selectedDay.month + 1}-${selectedDay.day}-${selectedDay.year}`;
-            const querySnapshot = await getDocs(query(activitiesCollectionRef));
-            //, where("date", "==", queryDate)
-            
-            if (!querySnapshot.empty) {
-                // Get the first document in the snapshot
-                const docSnapshot = querySnapshot.docs[0];
-                const docId = docSnapshot.id;
-                
-                const docRef = await getDoc(doc(db, "properties", user.uid, "events", docId));
-        
-                if (docRef.exists()) {
-                    const data = docRef.data();
-                    setActivities(data);
-                    setEditing(false);
-                }
-            } else {
-                // Handle the case where no documents match the query
-                console.log("No matching documents found.");
-            }
-        } catch (err) {
-            console.error(err);
-        }
-    };
+  const fetchData = async () => {
+    try {
+      if (user) {
+        const querySnapshot = await getDocs(collection(db, "properties", user.uid, "events"));
+        const eventData = [];
+        querySnapshot.forEach((doc) => {
+          const data = doc.data();
+          if (data.activity) {
+            const { activity } = data;
+            eventData.push(activity); 
+          }
+        });
+        setEvents(eventData)
+      }
+    } catch (err) {
+      console.error(err);
+      alert("An error occurred while fetching user data");
+    }
+  };
+
+    
     
 
       useEffect(() => {
@@ -102,9 +95,12 @@ function Calendar() {
       }, [user]);
 
 
-      
 
-    /*** EDIT AN ACTIVITY ***/
+      
+      const queryDate = `${selectedDay.month + 1}-${selectedDay.day}-${selectedDay.year}`;
+      const filteredEvents = events.filter((event) => event.date === queryDate);
+
+       /*** EDIT AN ACTIVITY ***/
     const [editing, setEditing] = useState(false);
     const [activity, setActivity] = useState(null);
     const [activityKey, setActivityKey] = useState(null);
@@ -116,81 +112,83 @@ function Calendar() {
     }
 
     return (
-        <Grid container spacing={3}>
-            <Grid item xs={12} md={8} lg={9}>
-                    <CalendarHead
-                        allMonths={allMonths}
-                        currentMonth={currentMonth}
-                        currentYear={currentYear}
-                        setMonth={setMonth}
-                        showMonthTable={showMonthTable}
-                        toggleMonthSelect={toggleMonthSelect}
-                    />
-                    <CalendarBody 
-                        firstDayOfMonth={firstDayOfMonth}
-                        daysInMonth={daysInMonth}
-                        currentDay={currentDay}
-                        currentMonth={currentMonth}
-                        currentMonthNum={currentMonthNum}
-                        actualMonth={actualMonth}
-                        setSelectedDay={setSelectedDay}
-                        selectedDay={selectedDay}
-                        weekdays={moment.weekdays()}
-                        //activeDays={activeDays}
-                    />
-            </Grid>
-            <Grid item xs={12} md={4} lg={3}>
-                <Paper className="paper">
-                { editing
-                        ?
-                            <>
-                                <h3>Edit Event on {selectedDay.month + 1}/{selectedDay.day} </h3>
-                                <EditActivity 
-                                    activity={activity}
-                                    activityKey={activityKey}
-                                    selectedDay={selectedDay} 
-                                    authUser={props.authUser}
-                                    setEditing={setEditing}
-                                    setOpenSnackbar={setOpenSnackbar}
-                                    setSnackbarMsg={setSnackbarMsg}
-                                />
-                            </>
-                        :
-                            <>
-                                <h3>Add Event on {selectedDay.month + 1}/{selectedDay.day} </h3>
-                                <AddActivity 
-                                    selectedDay={selectedDay} 
-                                    authUser={user}
-                                    setOpenSnackbar={setOpenSnackbar}
-                                    setSnackbarMsg={setSnackbarMsg}
-                                />
-                            </>
-                    }
-                </Paper>
-            </Grid>
-            <Grid item xs={12} md={7}>
-                <Paper className="paper">
-                <h3>Events on {selectedDay.month + 1}/{selectedDay.day}</h3>
-                <ActivityList
-                    activities={activities}
-                    authUser={user}
-                    setOpenSnackbar={setOpenSnackbar}
-                    setSnackbarMsg={setSnackbarMsg}
-                    editActivity={editActivity}
-                    setEditing={setEditing}
-                />
-                </Paper>
-            </Grid>
-            <Snackbar 
-                anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'right',
-                }}
-                open={openSnackbar} 
-                message={snackbarMsg}
-            />
-        </Grid>
-    )
+      <Grid container spacing={3}>
+          <Grid item xs={12} md={8} lg={9}>
+                  <CalendarHead
+                      allMonths={allMonths}
+                      currentMonth={currentMonth}
+                      currentYear={currentYear}
+                      setMonth={setMonth}
+                      showMonthTable={showMonthTable}
+                      toggleMonthSelect={toggleMonthSelect}
+                  />
+                  <CalendarBody 
+                      firstDayOfMonth={firstDayOfMonth}
+                      daysInMonth={daysInMonth}
+                      currentDay={currentDay}
+                      currentMonth={currentMonth}
+                      currentMonthNum={currentMonthNum}
+                      actualMonth={actualMonth}
+                      setSelectedDay={setSelectedDay}
+                      selectedDay={selectedDay}
+                      weekdays={moment.weekdays()}
+                      //activeDays={activeDays}
+                  />
+          </Grid>
+          <Grid item xs={12} md={4} lg={3}>
+              <Paper className="paper">
+              { editing
+                      ?
+                          <>
+                              <h3>Edit Event on {selectedDay.month + 1}/{selectedDay.day} </h3>
+                              <EditActivity 
+                                  activity={activity}
+                                  activityKey={activityKey}
+                                  selectedDay={selectedDay} 
+                                  authUser={props.authUser}
+                                  setEditing={setEditing}
+                                  setOpenSnackbar={setOpenSnackbar}
+                                  setSnackbarMsg={setSnackbarMsg}
+                              />
+                          </>
+                      :
+                          <>
+                              <h3>Add Event on {selectedDay.month + 1}/{selectedDay.day} </h3>
+                              <AddActivity 
+                                  selectedDay={selectedDay} 
+                                  authUser={user}
+                                  setOpenSnackbar={setOpenSnackbar}
+                                  setSnackbarMsg={setSnackbarMsg}
+                              />
+                          </>
+                  }
+              </Paper>
+          </Grid>
+          <Grid item xs={12} md={7}>
+              <Paper className="paper">
+              <h3>Events on {selectedDay.month + 1}/{selectedDay.day}</h3>
+              {filteredEvents.map((activity, index) => (
+    <div key={index}>
+      <h3>Activity {index + 1}</h3>
+      {activity && Object.keys(activity).map((key) => (
+      <p key={key}>
+      {key}: {activity[key]}
+      </p>
+      ))}
+    </div>
+     ))}
+              </Paper>
+          </Grid>
+          <Snackbar 
+              anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'right',
+              }}
+              open={openSnackbar} 
+              message={snackbarMsg}
+          />
+      </Grid>
+  )
 };
 
 export default Calendar;

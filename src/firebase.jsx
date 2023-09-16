@@ -141,6 +141,46 @@ function getMessages(callback) {
   });
 }
 
+async function addIt(uid, activity) {
+  try {
+    const collectionRef = collection(db, "properties", uid, "events");
+    await addDoc(collectionRef, {
+      activity: activity,
+      timestamp: serverTimestamp(),
+    });
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+
+
+const editIt = async (activity, activityKey) => {
+  try {
+    const docRef = doc(db, "properties", uid, "events", activityKey);
+    await updateDoc(docRef, {
+      name: activity.name,
+      type: activity.type,
+      date: activity.date,
+      time: activity.time,
+    });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+
+async function fetchActivities(uid, queryDate) {
+  try {
+    const collectionRef = collection(db, "properties", uid, "events");
+    const querySnapshot = await getDocs(
+      query(collectionRef, where("date", "==", queryDate))
+    );
+
+    const activities = [];
+    querySnapshot.forEach((doc) => {
+      activities.push(doc.data());
+    });
 
     return activities;
   } catch (error) {
